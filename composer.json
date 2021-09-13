@@ -1,0 +1,33 @@
+{
+  "name": "boilerplate12345/app",
+  "description": "Boilerplate12345",
+  "type": "project",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "license": "BSD-3-Clause",
+  "require": {
+    "php": ">=7.4",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-gd": "*",
+    "ext-gmp": "*",
+    "phpunit/phpunit": "^9",
+    "bower-asset/jquery": "3.5.*@stable",
+    "steroids/core": "^2.1@beta",
+    "steroids/gii": "^2.1@beta",
+    "steroids/auth": "^2.0@beta",
+    "steroids/file": "^2.0@beta",
+    "steroids/notifier": "^2.0@beta",
+    "steroids/cron": "^2.0@beta",
+    "steroids/swagger": "^2.0@beta"
+  },
+  "config": {
+    "process-timeout": 1800
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
+}

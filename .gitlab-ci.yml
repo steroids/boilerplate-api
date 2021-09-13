@@ -1,0 +1,58 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  PROJECT_NAME: 'boilerplate12345'
+  DEV_DEPLOY_DIR: '/var/host/www/$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME/www-$CI_COMMIT_REF_NAME'
+  VENDOR_DIRS: 'vendor'
+  EXCLUDE_DIRS: '.git .idea tests'
+  PROD_ROOT_DIR: '/var/www/$PROJECT_NAME/backend'
+  PROD_DEPLOY_DIR: '/var/www/$PROJECT_NAME/backend/$CI_COMMIT_REF_NAME-$CI_PIPELINE_ID'
+
+before_script:
+  - for DIR in $VENDOR_DIRS; do mkdir -p ../$CI_PROJECT_NAME.tmp/$DIR && rm -rf $DIR && mv ../$CI_PROJECT_NAME.tmp/$DIR ./$DIR; done
+
+after_script:
+  - for DIR in $VENDOR_DIRS; do mv $DIR/ ../$CI_PROJECT_NAME.tmp/$DIR; done
+
+build:
+  stage: build
+  only:
+    - master
+    - prod
+  artifacts:
+    paths:
+      - public/*.*
+      - public/assets/*.*
+  script:
+    - composer --no-interaction --no-progress --prefer-dist install
+    - echo "$CI_COMMIT_REF_NAME-$CI_JOB_ID" > $CI_PROJECT_DIR/public/version.txt
+
+deploy_dev:
+  stage: deploy
+  only:
+    - master
+  script:
+    - ssh root@dev "mkdir -p $DEV_DEPLOY_DIR"
+    - printf "%s\n" $EXCLUDE_DIRS > ../.rsync-exclude && rsync -rzak --exclude-from=../.rsync-exclude $CI_PROJECT_DIR/ root@dev:$DEV_DEPLOY_DIR
+    - ssh root@dev "cd $DEV_DEPLOY_DIR
+      && ln -sf ../config/config.php
+      && php yii migrate --interactive=0
+      && service php7.4-fpm restart"
+
+deploy_prod:
+  stage: deploy
+  only:
+    - prod
+  script:
+    - ssh $PROD_SSH_HOST -p $PROD_SSH_PORT "mkdir -p $PROD_DEPLOY_DIR"
+    - printf "%s\n" $EXCLUDE_DIRS > ../.rsync-exclude
+      && rsync -rzak --exclude-from=../.rsync-exclude --rsh="ssh -p $PROD_SSH_PORT" $CI_PROJECT_DIR/ $PROD_SSH_HOST:$PROD_DEPLOY_DIR
+    - ssh $PROD_SSH_HOST -p $PROD_SSH_PORT "
+      cd $PROD_DEPLOY_DIR
+      && ln -sf ../config/config.php
+      && php yii migrate --interactive=0
+      && rm -f $PROD_ROOT_DIR/current
+      && ln -sf $PROD_DEPLOY_DIR $PROD_ROOT_DIR/current
+      && sudo systemctl reload php7.4-fpm.service"

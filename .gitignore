@@ -1,6 +1,37 @@
-assets/*
-!assets/.gitignore
-protected/runtime/*
-!protected/runtime/.gitignore
-protected/data/*.db
-themes/classic/views/
+# phpstorm project files
+.idea
+/.idea/workspace.xml
+/.idea/modules.xml
+/.idea/*.iml
+/.idea/dictionaries/
+/.idea/dataSources*
+/.idea/libraries/
+/.idea/jsLibraryMappings.xml
+/.idea/watcherTasks.xml
+/.idea/php.xml
+/.idea/deployment.xml
+
+# windows thumbnail cache
+Thumbs.db
+
+# Mac DS_Store Files
+.DS_Store
+
+# composer itself is not needed
+composer.phar
+
+# Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock
+
+/config.php
+
+public/assets/*
+node_modules
+/vendor
+/files/*
+/.env
+/.cache-loader
+
+!.gitempty
+.editorconfig
