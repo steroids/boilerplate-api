@@ -3,14 +3,12 @@
 namespace app\user\models\meta;
 
 use steroids\core\base\Model;
-use app\user\enums\Gender;
 use steroids\core\behaviors\TimestampBehavior;
 use \Yii;
 use yii\db\ActiveQuery;
 use steroids\auth\models\AuthLogin;
 use steroids\auth\models\AuthConfirm;
 use steroids\file\models\File;
-use app\user\models\Company;
 
 /**
  * @property string $id
@@ -26,7 +24,6 @@ use app\user\models\Company;
  * @property boolean $isUnSubscribed
  * @property string $createTime
  * @property string $updateTime
- * @property string $gender
  * @property string $birthdate
  * @property integer $avatarId
  * @property integer $companyId
@@ -34,7 +31,6 @@ use app\user\models\Company;
  * @property-read AuthLogin[] $logins
  * @property-read AuthConfirm[] $confirms
  * @property-read File $avatar
- * @property-read Company $company
  */
 abstract class UserMeta extends Model
 {
@@ -66,7 +62,6 @@ abstract class UserMeta extends Model
             ['passwordHash', 'string'],
             ['language', 'string', 'max' => '10'],
             [['isBanned', 'isUnSubscribed'], 'steroids\\core\\validators\\ExtBooleanValidator'],
-            ['gender', 'in', 'range' => Gender::getKeys()],
             ['birthdate', 'date', 'format' => 'php:Y-m-d'],
             [['avatarId', 'companyId'], 'integer'],
         ];
@@ -102,14 +97,6 @@ abstract class UserMeta extends Model
     public function getAvatar()
     {
         return $this->hasOne(File::class, ['id' => 'avatarId']);
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getCompany()
-    {
-        return $this->hasOne(Company::class, ['id' => 'companyId']);
     }
 
     public static function meta()
@@ -173,12 +160,6 @@ abstract class UserMeta extends Model
                 'appType' => 'autoTime',
                 'touchOnUpdate' => true
             ],
-            'gender' => [
-                'label' => Yii::t('app', 'Пол'),
-                'appType' => 'enum',
-                'isPublishToFrontend' => false,
-                'enumClassName' => Gender::class
-            ],
             'birthdate' => [
                 'label' => Yii::t('app', 'Дата рождения'),
                 'appType' => 'date',
@@ -188,10 +169,6 @@ abstract class UserMeta extends Model
                 'label' => Yii::t('app', 'Аватар'),
                 'appType' => 'file',
                 'isPublishToFrontend' => false
-            ],
-            'companyId' => [
-                'label' => Yii::t('app', 'Компания'),
-                'appType' => 'integer'
             ],
             'licenseNumber' => [
                 'label' => Yii::t('app', 'Номер водительского удостоверения')

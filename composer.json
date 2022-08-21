@@ -22,7 +22,10 @@
     "steroids/swagger": "^2.0@beta"
   },
   "config": {
-    "process-timeout": 1800
+    "process-timeout": 1800,
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
+    }
   },
   "repositories": [
     {
