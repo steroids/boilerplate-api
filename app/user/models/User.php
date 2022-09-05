@@ -43,4 +43,14 @@ class User extends UserMeta implements UserInterface
     public function sendNotify($templateName, $params = [])
     {
     }
+
+    public function getIsBanned()
+    {
+        return $this->isBanned;
+    }
+
+    public function setIsBanned($value)
+    {
+        $this->isBanned = $value;
+    }
 }

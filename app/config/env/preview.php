@@ -9,15 +9,15 @@ return [
                 'boilerplate12345.kozhin.dev',
             ]
         ],
-        'log' => [
-            'targets' => [
-                [
-                    'class' => 'steroids\core\components\SentryTarget',
-                    'dsn' => 'https://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@sentry.kozhindev.com/000',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
+//        'log' => [
+//            'targets' => [
+//                [
+//                    'class' => 'steroids\core\components\SentryTarget',
+//                    'dsn' => 'https://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@sentry.kozhindev.com/000',
+//                    'levels' => ['error', 'warning'],
+//                ],
+//            ],
+//        ],
     ],
     'modules' => [
         'file' => [

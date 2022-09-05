@@ -1,21 +1,11 @@
 <?php
 
-namespace tests;
+namespace app\tests;
 
-use app\user\enums\Gender;
 use steroids\core\base\FormModel;
-use steroids\file\FileModule;
-use steroids\file\models\FileImage;
-use steroids\file\structure\UploadOptions;
 use Yii;
-use app\billing\enums\CurrencyEnum;
-use app\billing\enums\SystemAccountName;
-use app\billing\enums\UserAccountName;
-use app\billing\models\BillingAccount;
-use app\marketing\enums\MarketingUnitType;
 use app\user\models\User;
 use PHPUnit\Framework\TestCase;
-use steroids\billing\operations\ManualOperation;
 use yii\web\Request;
 
 abstract class BaseTestCase extends TestCase
@@ -40,7 +30,6 @@ abstract class BaseTestCase extends TestCase
                 'phone' => '+7' . $pseudoUniqueUserNumber,
                 'role' => 'user',
                 'birthdate' => '1985-03-15',
-                'gender' => Gender::MALE,
             ],
             $params
         ));

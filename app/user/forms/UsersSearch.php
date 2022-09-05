@@ -2,10 +2,8 @@
 
 namespace app\user\forms;
 
-use app\user\enums\UserRole;
 use app\user\forms\meta\UsersSearchMeta;
 use app\user\helpers\UserHelper;
-use app\user\models\Company;
 use app\user\models\User;
 
 class UsersSearch extends UsersSearchMeta

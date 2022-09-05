@@ -1,6 +1,6 @@
 <?php
 
-namespace tests;
+namespace app\tests;
 
 use app\user\models\User;
 use yii\base\Component;

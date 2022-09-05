@@ -5,16 +5,9 @@ stages:
 variables:
   PROJECT_NAME: 'boilerplate12345'
   DEV_DEPLOY_DIR: '/var/host/www/$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME/www-$CI_COMMIT_REF_NAME'
-  VENDOR_DIRS: 'vendor'
   EXCLUDE_DIRS: '.git .idea tests'
   PROD_ROOT_DIR: '/var/www/$PROJECT_NAME/backend'
   PROD_DEPLOY_DIR: '/var/www/$PROJECT_NAME/backend/$CI_COMMIT_REF_NAME-$CI_PIPELINE_ID'
-
-before_script:
-  - for DIR in $VENDOR_DIRS; do mkdir -p ../$CI_PROJECT_NAME.tmp/$DIR && rm -rf $DIR && mv ../$CI_PROJECT_NAME.tmp/$DIR ./$DIR; done
-
-after_script:
-  - for DIR in $VENDOR_DIRS; do mv $DIR/ ../$CI_PROJECT_NAME.tmp/$DIR; done
 
 build:
   stage: build
@@ -23,8 +16,14 @@ build:
     - prod
   artifacts:
     paths:
-      - public/*.*
-      - public/assets/*.*
+      - app/
+      - public/
+      - vendor/
+      - composer.json
+      - composer.lock
+      - README.md
+      - yii
+      - yii.bat
   script:
     - composer --no-interaction --no-progress --prefer-dist install
     - echo "$CI_COMMIT_REF_NAME-$CI_JOB_ID" > $CI_PROJECT_DIR/public/version.txt
@@ -39,7 +38,7 @@ deploy_dev:
     - ssh root@dev "cd $DEV_DEPLOY_DIR
       && ln -sf ../config/config.php
       && php yii migrate --interactive=0
-      && service php7.4-fpm restart"
+      && service php8.0-fpm restart"
 
 deploy_prod:
   stage: deploy

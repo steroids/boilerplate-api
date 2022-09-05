@@ -10,15 +10,15 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'log' => [
-            'targets' => [
-                [
-                    'class' => 'steroids\core\components\SentryTarget',
-                    'dsn' => 'https://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@sentry.kozhindev.com/000',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
+//        'log' => [
+//            'targets' => [
+//                [
+//                    'class' => 'steroids\core\components\SentryTarget',
+//                    'dsn' => 'https://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@sentry.kozhindev.com/000',
+//                    'levels' => ['error', 'warning'],
+//                ],
+//            ],
+//        ],
     ],
     'modules' => [
         'file' => [
