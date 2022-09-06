@@ -5,18 +5,41 @@ return [
         'type' => 1,
         'children' => [
             'a::swagger',
+            'a::api::init',
+            'a::gii',
+            'a::api::gii',
+            'a::api::auth::login',
+            'a::api::auth::recovery',
+            'a::api::auth::recovery-confirm',
+            'a::api::auth::registration',
+            'a::api::auth::registration-confirm',
+            'a::api::admin::auth::login',
         ],
     ],
     'user' => [
         'type' => 1,
         'children' => [
             'a::swagger',
+            'a::api::init',
+            'a::gii',
+            'a::api::gii',
+            'a::api::auth::logout',
+            'a::api::auth::recovery',
+            'a::api::auth::recovery-confirm',
         ],
     ],
     'admin' => [
         'type' => 1,
         'children' => [
             'a::swagger',
+            'a::api::init',
+            'a::api::admin',
+            'a::gii',
+            'a::api::gii',
+            'a::api::auth::logout',
+            'a::api::auth::recovery',
+            'a::api::auth::recovery-confirm',
+            'm::app\\user\\models\\User',
         ],
     ],
     'm::steroids\\auth\\models\\AuthConfirm' => [
@@ -224,6 +247,7 @@ return [
             'a::api::admin::auth::confirm-accept',
             'a::api::admin::auth::ban',
             'a::api::admin::auth::password',
+            'a::api::admin::auth::unban',
         ],
     ],
     'a::api::admin::auth::self' => [
@@ -526,5 +550,9 @@ return [
     'a::swagger::types' => [
         'type' => 2,
         'description' => 'types',
+    ],
+    'a::api::admin::auth::unban' => [
+        'type' => 2,
+        'description' => 'unban',
     ],
 ];

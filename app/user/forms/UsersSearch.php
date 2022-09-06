@@ -15,6 +15,18 @@ class UsersSearch extends UsersSearchMeta
 
     public bool $isBanned = false;
 
+    public function fields()
+    {
+        return [
+            'id',
+            'name',
+            'role',
+            'email',
+            'createTime',
+            'lastLogin',
+        ];
+    }
+
     public function prepare($query)
     {
         parent::prepare($query);
